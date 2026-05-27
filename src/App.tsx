@@ -833,7 +833,7 @@ function BootSequence({ onComplete }: { onComplete: () => void }) {
     >
       <div className="w-full max-w-2xl z-10 relative">
         <div className="text-[16px] sm:text-[24px] mb-6 sm:mb-8 animate-pulse text-center tracking-[0.2em] sm:tracking-[0.4em] font-bold">
-          <GlitchText active color="#FDE047"> ENG.OMAR_WAEL_PORTFOLIO_INITIALIZING </GlitchText>
+          <GlitchText active color="#FDE047">ENG.OMAR_WAEL_PORTFOLIO (⌐■_■)</GlitchText>
         </div>
         
         <div className="space-y-2 mb-6 sm:mb-8 h-[200px] text-[11px] sm:text-[14px]">
