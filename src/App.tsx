@@ -558,14 +558,14 @@ function TerminalConsole({
     switch (cleaned) {
       case "help":
         newHistory.push(
-          "┌─ AVAILABLE COMMANDS ─────────────────────┐",
-          "│ about       → load identity manifest     │",
-          "│ stack       → enumerate dependencies     │",
-          "│ history     → open contribution logs     │",
-          "│ contact     → open secure channel        │",
-          "│ clear       → wipe console history       │",
-          "│ whoami      → current user               │",
-          "└──────────────────────────────────────────┘"
+          "── AVAILABLE COMMANDS ──",
+          "  about    → load identity manifest",
+          "  stack    → enumerate dependencies",
+          "  history  → open contribution logs",
+          "  contact  → open secure channel",
+          "  clear    → wipe console history",
+          "  whoami   → current user",
+          "────────────────────────"
         );
         break;
       case "about":
@@ -643,18 +643,18 @@ function TerminalConsole({
   return (
     <div className={`relative rounded-[12px] border border-[${CYBER_PURPLE}]/25 bg-[#070709]/95 backdrop-blur-[8px] overflow-hidden transition-all ${glitching ? "saturate-[1.3] contrast-[1.15] animate-[glitch_0.12s_steps(2)]" : ""}`}>
       {/* Header bar */}
-      <div className="flex items-center justify-between px-[15px] h-[38px] border-b border-[#141417] bg-[#08080B]">
-        <div className="flex items-center gap-[12px] text-[10px] tracking-[0.24em] font-bold">
+      <div className="flex items-center justify-between px-[10px] sm:px-[15px] h-[38px] border-b border-[#141417] bg-[#08080B] gap-2">
+        <div className="flex items-center gap-[8px] sm:gap-[12px] text-[9px] sm:text-[10px] tracking-[0.14em] sm:tracking-[0.24em] font-bold min-w-0">
           <div className="flex gap-[5px]">
             <span className="h-[7px] w-[7px] rounded-[1px] bg-[#FDE047] shadow-[0_0_6px_#FDE047]" />
             <span className="h-[7px] w-[7px] rounded-[1px] bg-[#C084FC] shadow-[0_0_6px_#C084FC]" />
             <span className="h-[7px] w-[7px] rounded-[1px] bg-[#333]" />
           </div>
           <span className="text-[#C084FC]">DEDSEC_SHELL</span>
-          <span className="text-[#444]">—</span>
-          <span className="text-[#666] font-medium tracking-[0.2em]">bash 5.1 • tty/1</span>
+          <span className="text-[#444] hidden sm:inline">—</span>
+          <span className="text-[#666] font-medium tracking-[0.2em] hidden sm:inline">bash 5.1 • tty/1</span>
         </div>
-        <div className="flex items-center gap-[9px] text-[9px] text-[#555] font-bold tracking-[0.22em]">
+        <div className="flex items-center gap-[7px] sm:gap-[9px] text-[8px] sm:text-[9px] text-[#555] font-bold tracking-[0.18em] sm:tracking-[0.22em] shrink-0">
           <span className="h-[6px] w-[6px] rounded-full bg-[#A3E635] animate-pulse" />
           LIVE
         </div>
@@ -765,7 +765,7 @@ function NameTag() {
   return (
     <div className="inline-flex flex-col gap-[4px]">
       <div className="flex items-baseline gap-[12px] flex-wrap">
-        <h1 className="text-[44px] sm:text-[60px] leading-[0.86] tracking-[-0.012em] font-[750]">
+        <h1 className="text-[34px] xs:text-[40px] sm:text-[60px] leading-[0.9] sm:leading-[0.86] tracking-[-0.012em] font-[750]">
           <GlitchText color="#F0F0F3">OMAR</GlitchText>
           <GlitchText color={DEDSEC_YELLOW} active className="ml-[0.06em]"> WAEL</GlitchText>
         </h1>
@@ -828,16 +828,16 @@ function BootSequence({ onComplete }: { onComplete: () => void }) {
 
   return (
     <motion.div 
-      className="fixed inset-0 z-[100000] bg-[#050507] text-[#FDE047] font-mono flex flex-col p-8 justify-center items-center"
+      className="fixed inset-0 z-[100000] bg-[#050507] text-[#FDE047] font-mono flex flex-col p-4 sm:p-8 justify-center items-center"
       exit={{ opacity: 0, scale: 1.1, filter: "blur(10px)" }}
       transition={{ duration: 0.8, ease: "easeInOut" }}
     >
       <div className="w-full max-w-2xl z-10 relative">
-        <div className="text-[24px] mb-8 animate-pulse text-center tracking-[0.4em] font-bold">
+        <div className="text-[16px] sm:text-[24px] mb-6 sm:mb-8 animate-pulse text-center tracking-[0.2em] sm:tracking-[0.4em] font-bold">
           <GlitchText active color="#FDE047">DEDSEC_OS_INITIALIZING</GlitchText>
         </div>
         
-        <div className="space-y-2 mb-8 h-[200px] text-[14px]">
+        <div className="space-y-2 mb-6 sm:mb-8 h-[200px] text-[11px] sm:text-[14px]">
           {lines.map((line, i) => (
             <div key={i} className="opacity-80">
               <span className="text-[#A3E635] mr-2">[{new Date().toISOString().split('T')[1].substring(0, 8)}]</span>
@@ -958,8 +958,13 @@ export default function App() {
     return () => unsub();
   }, [scrollY]);
 
-  // Custom cursor
+  // Custom cursor — disabled on touch devices
   useEffect(() => {
+    const isTouchDevice = window.matchMedia("(pointer: coarse)").matches || 'ontouchstart' in window;
+    if (isTouchDevice) {
+      setShowCursor(false);
+      return;
+    }
     const handleMove = (e: MouseEvent) => {
       setMousePos({ x: e.clientX, y: e.clientY });
       setShowCursor(true);
@@ -1025,9 +1030,9 @@ export default function App() {
       >
         {/* ═══ HEADER ═══ */}
         <header className="sticky top-0 z-50 border-b border-[#C084FC]/15 bg-[#08080A]/92 backdrop-blur-[14px]">
-          <div className="max-w-[1200px] mx-auto px-5 sm:px-7">
-            <div className="h-[50px] flex items-center justify-between text-[11px] tracking-[0.22em] font-bold">
-              <div className="flex items-center gap-6">
+          <div className="max-w-[1200px] mx-auto px-3 sm:px-7">
+            <div className="h-[50px] flex items-center justify-between text-[10px] sm:text-[11px] tracking-[0.14em] sm:tracking-[0.22em] font-bold gap-3">
+              <div className="flex items-center gap-3 sm:gap-6 min-w-0">
                 <div className="flex items-center gap-[9px]">
                   <span className="h-[8px] w-[8px] bg-[#FDE047] shadow-[0_0_10px_#FDE047] animate-pulse rounded-[1px]" />
                   <span className="text-[#FDE047] tracking-[0.28em]">DEDSEC</span>
@@ -1039,7 +1044,7 @@ export default function App() {
                   <span className="text-[#C084FC]">{SRGN_ALIAS}</span>
                 </div>
               </div>
-              <div className="flex items-center gap-5">
+              <div className="flex items-center gap-3 sm:gap-5 shrink-0">
                 <span className="hidden md:block text-[#555] text-[10px] tracking-[0.24em]">[ UID_0x7B ]</span>
                 <div className="hidden md:flex items-center gap-[7px]">
                   <span className="h-[5px] w-[5px] rounded-full bg-[#A3E635] animate-pulse" />
@@ -1059,7 +1064,7 @@ export default function App() {
         </header>
 
         <main className="flex-1">
-          <div className="max-w-[1200px] mx-auto px-5 sm:px-7 py-11 sm:py-[54px]">
+          <div className="max-w-[1200px] mx-auto px-3 sm:px-7 py-8 sm:py-[54px]">
             {/* ═══ HERO ═══ */}
             <motion.section
               initial="hidden"
@@ -1086,16 +1091,16 @@ export default function App() {
                 />
 
                 {/* Header bar */}
-                <div className="flex items-center justify-between px-5 h-[42px] border-b border-[#16161A] bg-[#08080B]">
+                <div className="flex items-center justify-between px-3 sm:px-5 h-[42px] border-b border-[#16161A] bg-[#08080B]">
                   <div className="flex items-center gap-[11px] text-[11px] tracking-[0.22em] font-bold">
                     <div className="flex gap-[5px]">
                       <span className="h-[8px] w-[8px] rounded-[1px] bg-[#FDE047] shadow-[0_0_7px_#FDE047]" />
                       <span className="h-[8px] w-[8px] rounded-[1px] bg-[#C084FC] shadow-[0_0_7px_#C084FC]" />
                       <span className="h-[8px] w-[8px] rounded-[1px] bg-[#818CF8] shadow-[0_0_7px_#818CF8]" />
                     </div>
-                    <span className="text-[#C084FC] tracking-[0.26em]">whoami --verbose</span>
+                    <span className="text-[#C084FC] tracking-[0.15em] sm:tracking-[0.26em] text-[10px] sm:text-[11px] mobile-tight-tracking">whoami --verbose</span>
                   </div>
-                  <div className="flex items-center gap-[9px] text-[10px] text-[#555] font-bold tracking-[0.22em]">
+                  <div className="hidden sm:flex items-center gap-[9px] text-[10px] text-[#555] font-bold tracking-[0.22em]">
                     <span>BASH</span>
                     <span className="text-[#333]">•</span>
                     <span>TTY</span>
@@ -1103,7 +1108,7 @@ export default function App() {
                 </div>
 
                 {/* Hero content */}
-                <div className="px-6 sm:px-10 py-[38px] sm:py-[46px]">
+                <div className="px-4 sm:px-10 py-[30px] sm:py-[46px]">
                   <motion.div variants={staggerItem} className="mb-[28px] flex flex-col sm:flex-row items-start sm:items-center gap-[24px]">
                     <HackedProfilePic />
                     <NameTag />
@@ -1140,7 +1145,7 @@ export default function App() {
                       <DigitalScan key={pill.k} color={pill.c}>
                         <motion.div
                           whileHover={{ y: -1, scale: 1.01 }}
-                          className="group h-[40px] px-[14px] rounded-[9px] border border-[#1E1E24] bg-[#09090C] flex items-center justify-between hover:border-[#2A2A32] transition-colors"
+                          className="group h-auto min-h-[40px] py-[8px] px-[12px] sm:px-[14px] rounded-[9px] border border-[#1E1E24] bg-[#09090C] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-[5px] sm:gap-0 hover:border-[#2A2A32] transition-colors"
                         >
                           <span className="text-[10px] tracking-[0.24em] text-[#666] font-bold group-hover:text-[#888] transition-colors">
                             {pill.k}
@@ -1155,7 +1160,7 @@ export default function App() {
                 </div>
 
                 {/* Terminal prompt */}
-                <div className="h-[43px] px-6 sm:px-10 border-t border-[#141417] bg-[#070709] flex items-center gap-[10px] text-[12px] font-[550]">
+                <div className="h-[43px] px-4 sm:px-10 border-t border-[#141417] bg-[#070709] flex items-center gap-[8px] sm:gap-[10px] text-[11px] sm:text-[12px] font-[550] overflow-x-auto whitespace-nowrap scrollbar-hide">
                   <span className="text-[#FDE047] font-[650]">omar@blm41th</span>
                   <span className="text-[#444]">:</span>
                   <span className="text-[#999]">~</span>
@@ -1172,7 +1177,7 @@ export default function App() {
               transition={{ delay: 0.35 }}
               className="mb-[52px]"
             >
-              <div className="mb-[14px] flex items-center gap-[11px] text-[11px] tracking-[0.26em] font-bold text-[#777]">
+              <div className="mb-[14px] flex items-center gap-[8px] sm:gap-[11px] text-[10px] sm:text-[11px] tracking-[0.18em] sm:tracking-[0.26em] font-bold text-[#777]">
                 <span className="text-[#FDE047]">➜</span>
                 INTERACTIVE_SHELL
                 <div className="flex-1 h-[1px] bg-gradient-to-r from-[#C084FC]/40 via-[#222] to-transparent" />
@@ -1182,7 +1187,7 @@ export default function App() {
             </motion.section>
 
             {/* ═══ VIEW SWITCHER ═══ */}
-            <div className="flex items-center gap-[10px] mb-[26px] overflow-x-auto scrollbar-hide">
+            <div className="flex items-center gap-[6px] sm:gap-[10px] mb-[26px] overflow-x-auto scrollbar-hide pb-[2px]">
               {views.map((view, i) => (
                 <motion.button
                   key={view.id}
@@ -1192,18 +1197,18 @@ export default function App() {
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.4 + i * 0.05 }}
-                  className={`relative px-[17px] h-[45px] rounded-[10px] border font-[600] tracking-[-0.01em] transition-all whitespace-nowrap ${
+                  className={`relative px-[10px] sm:px-[17px] h-[38px] sm:h-[45px] rounded-[8px] sm:rounded-[10px] border font-[600] tracking-[-0.01em] transition-all whitespace-nowrap shrink-0 ${
                     activeView === view.id
                       ? "bg-[#121217] border-[#FDE047]/65 text-[#FDE047] shadow-[inset_0_0_0_1px_rgba(253,224,71,0.08),0_0_25px_-8px_rgba(253,224,71,0.3)]"
                       : "bg-[#0B0B0E] border-[#C084FC]/20 text-[#B8B8C0] hover:border-[#C084FC]/45 hover:text-[#E8E8EE]"
                   }`}
                 >
-                  <span className="text-[13.5px]">$ {view.label}</span>
-                  <span className="ml-[9px] text-[10px] tracking-[0.18em] opacity-60 font-bold">{view.desc}</span>
+                  <span className="text-[11.5px] sm:text-[13.5px]">$ {view.label}</span>
+                  <span className="ml-[5px] sm:ml-[9px] text-[8px] sm:text-[10px] tracking-[0.18em] opacity-60 font-bold hidden xs:inline">{view.desc}</span>
                   {activeView === view.id && (
                     <motion.div
                       layoutId="viewIndicator"
-                      className="absolute -bottom-[1px] left-[17px] right-[17px] h-[2px] bg-[#FDE047] shadow-[0_0_10px_#FDE047]"
+                      className="absolute -bottom-[1px] left-[10px] sm:left-[17px] right-[10px] sm:right-[17px] h-[2px] bg-[#FDE047] shadow-[0_0_10px_#FDE047]"
                     />
                   )}
                 </motion.button>
@@ -1220,7 +1225,7 @@ export default function App() {
                       <Window title="IDENTITY_MANIFEST" subtitle={`[ ${SRGN_ALIAS} ]`} accent={DEDSEC_YELLOW}>
                         <motion.div variants={staggerContainer} initial="hidden" animate="visible" className="space-y-[22px]">
                           <motion.div variants={staggerItem}>
-                            <h3 className="text-[13px] tracking-[0.25em] text-[#FDE047] font-[750] mb-[14px] flex items-center gap-[11px]">
+                            <h3 className="text-[12px] sm:text-[13px] tracking-[0.18em] sm:tracking-[0.25em] text-[#FDE047] font-[750] mb-[14px] flex items-center gap-[11px]">
                               <span className="h-[2.5px] w-[21px] bg-[#FDE047] shadow-[0_0_13px_#FDE047]/65" />
                               <DecoderText text="PROFESSIONAL_CORE" delay={200} />
                             </h3>
@@ -1372,8 +1377,8 @@ export default function App() {
                       <Window title="CONTRIBUTION_HISTORY" subtitle="git log --stat" accent={DEDSEC_GREEN}>
                         <motion.div variants={staggerContainer} initial="hidden" animate="visible" className="space-y-[22px]">
                           {/* ITI - MANDATORY ACCURACY */}
-                          <motion.div variants={staggerItem} className="relative pl-[24px] border-l-[3px] border-[#FDE047]/80">
-                            <div className="absolute -left-[39px] top-0 text-[10px] font-mono text-[#555] tabular-nums w-[32px] text-right font-bold">
+                          <motion.div variants={staggerItem} className="relative pl-[16px] sm:pl-[24px] border-l-[3px] border-[#FDE047]/80">
+                            <div className="hidden sm:block absolute -left-[39px] top-0 text-[10px] font-mono text-[#555] tabular-nums w-[32px] text-right font-bold">
                               HEAD
                             </div>
 
@@ -1427,9 +1432,9 @@ export default function App() {
                             <motion.div
                               key={exp.title}
                               variants={staggerItem}
-                              className="relative pl-[24px] border-l-[2px] border-[#1A1A1E] hover:border-[#C084FC]/50 transition-colors py-[2px]"
+                              className="relative pl-[16px] sm:pl-[24px] border-l-[2px] border-[#1A1A1E] hover:border-[#C084FC]/50 transition-colors py-[2px]"
                             >
-                              <div className="absolute -left-[39px] top-[1px] text-[10px] font-mono text-[#444] tabular-nums w-[32px] text-right">
+                              <div className="hidden sm:block absolute -left-[39px] top-[1px] text-[10px] font-mono text-[#444] tabular-nums w-[32px] text-right">
                                 {String(exp.date.split("—")[0]).trim().slice(-2)}
                               </div>
 
@@ -1468,7 +1473,7 @@ export default function App() {
                     <motion.div key="contact" variants={pageVariants} initial="initial" animate="animate" exit="exit">
                       <Window title="ENCRYPTED_CHANNEL" subtitle="PGP • TLS 1.3" accent={CYBER_PINK}>
                         <motion.div variants={staggerContainer} initial="hidden" animate="visible" className="space-y-[22px]">
-                          <motion.div variants={staggerItem} className="rounded-[10px] border border-[#1E1E22] bg-[#08080B] p-[18px]">
+                          <motion.div variants={staggerItem} className="rounded-[10px] border border-[#1E1E22] bg-[#08080B] p-[14px] sm:p-[18px]">
                             <div className="flex items-center gap-[12px] mb-[15px]">
                               <motion.span
                                 className="h-[9px] w-[9px] rounded-full bg-[#F472B6]"
@@ -1495,13 +1500,13 @@ export default function App() {
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     whileHover={{ x: 2 }}
-                                    className="group flex items-center justify-between border border-[#1A1A1E] rounded-[9px] px-[14px] h-[46px] hover:border-[#F472B6]/40 hover:bg-[#0D0D12] transition-all"
+                                    className="group flex items-center justify-between border border-[#1A1A1E] rounded-[9px] px-[10px] sm:px-[14px] h-[46px] hover:border-[#F472B6]/40 hover:bg-[#0D0D12] transition-all gap-2"
                                   >
                                     <div className="flex items-center gap-[10px]">
                                       <span className="text-[10px] tracking-[0.22em] text-[#666] font-bold">{link.k}</span>
                                       <span className="h-[12px] w-px bg-[#222]" />
                                     </div>
-                                    <div className="flex items-center gap-[9px] max-w-[50%] sm:max-w-none overflow-hidden text-ellipsis whitespace-nowrap">
+                                    <div className="flex items-center gap-[7px] sm:gap-[9px] max-w-[58%] sm:max-w-none overflow-hidden text-ellipsis whitespace-nowrap min-w-0">
                                       <span className="text-[12px] sm:text-[13px] text-[#E0E0E6] tracking-[0.008em] font-[500] group-hover:text-white transition-colors truncate">
                                         {link.v}
                                       </span>
@@ -1593,7 +1598,7 @@ export default function App() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.38 }}
-                  className="rounded-[13px] border border-[#FDE047]/22 bg-[#0A0A0D] p-[18px] relative overflow-hidden"
+                  className="rounded-[13px] border border-[#FDE047]/22 bg-[#0A0A0D] p-[14px] sm:p-[18px] relative overflow-hidden"
                 >
                   <motion.div
                     className="absolute inset-0 rounded-[13px] pointer-events-none"
@@ -1618,9 +1623,9 @@ export default function App() {
                         { l: "DATABASES", v: "PostgreSQL • MySQL" },
                         { l: "RUNTIME", v: "Linux • Docker • Bash" },
                       ].map((item) => (
-                        <div key={item.l} className="flex justify-between items-baseline">
+                        <div key={item.l} className="flex flex-col sm:flex-row sm:justify-between sm:items-baseline gap-[4px]">
                           <span className="text-[10px] tracking-[0.22em] text-[#666] font-bold">{item.l}</span>
-                          <span className="text-[12.5px] text-[#E0E0E6] font-[550] tracking-[0.004em]">{item.v}</span>
+                          <span className="text-[12.5px] text-[#E0E0E6] font-[550] tracking-[0.004em] break-words">{item.v}</span>
                         </div>
                       ))}
                     </div>
@@ -1639,7 +1644,7 @@ export default function App() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.42 }}
-                  className="rounded-[13px] border border-[#C084FC]/22 bg-[#09090D] p-[18px]"
+                  className="rounded-[13px] border border-[#C084FC]/22 bg-[#09090D] p-[14px] sm:p-[18px]"
                 >
                   <div className="flex items-center gap-[11px] mb-[14px]">
                     <span
@@ -1666,7 +1671,7 @@ export default function App() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.46 }}
-                  className="rounded-[11px] border border-[#16161A] bg-[#08080A] p-[14px]"
+                  className="rounded-[11px] border border-[#16161A] bg-[#08080A] p-[12px] sm:p-[14px]"
                 >
                   <div className="text-[10px] tracking-[0.24em] text-[#666] font-bold mb-[9px]">SHORTCUTS</div>
                   <div className="space-y-[7px] text-[11.5px]">
@@ -1692,17 +1697,17 @@ export default function App() {
             </div>
 
             {/* ═══ FOOTER ═══ */}
-            <footer className="mt-[62px] pt-[19px] border-t border-[#141416] flex flex-wrap items-center justify-between gap-5 text-[11px] tracking-[0.18em] font-bold">
-              <div className="flex items-center gap-[16px] text-[#666]">
+            <footer className="mt-[40px] sm:mt-[62px] pt-[19px] border-t border-[#141416] flex flex-col sm:flex-row flex-wrap items-center justify-between gap-3 sm:gap-5 text-[10px] sm:text-[11px] tracking-[0.18em] font-bold">
+              <div className="flex items-center gap-[8px] sm:gap-[16px] text-[#666] flex-wrap justify-center">
                 <span>OMAR_WAEL</span>
                 <span className="text-[#333]">•</span>
                 <span className="text-[#C084FC]">{SRGN_ALIAS}</span>
-                <span className="text-[#333]">•</span>
-                <span className="text-[#FDE047]">PYTHON_BACKEND</span>
-                <span className="text-[#333]">•</span>
-                <span>GEN_AI</span>
+                <span className="text-[#333] hidden sm:inline">•</span>
+                <span className="text-[#FDE047] hidden sm:inline">PYTHON_BACKEND</span>
+                <span className="text-[#333] hidden sm:inline">•</span>
+                <span className="hidden sm:inline">GEN_AI</span>
               </div>
-              <div className="flex items-center gap-[15px]">
+              <div className="flex items-center gap-[12px] sm:gap-[15px]">
                 {["MANIFEST", "PGP_KEY", "SOURCE"].map((link, i) => (
                   <a
                     key={link}
@@ -1744,6 +1749,15 @@ export default function App() {
         }
         @media (max-width: 640px) {
           h1 { letter-spacing: -0.008em !important; }
+        }
+        @media (max-width: 480px) {
+          .mobile-tight-tracking { letter-spacing: 0.08em !important; }
+        }
+        @media (pointer: coarse) {
+          * { cursor: auto !important; }
+        }
+        @media (max-width: 480px) {
+          .grid.lg\:grid-cols-\[1\.12fr_0\.88fr\] { gap: 18px !important; }
         }
         .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
         .scrollbar-hide::-webkit-scrollbar { display: none; }
@@ -1796,26 +1810,26 @@ function Window({
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
-      <div className="flex items-center justify-between px-[18px] h-[44px] border-b border-[#16161A] bg-[#08080B]">
-        <div className="flex items-center gap-[13px]">
+      <div className="flex items-center justify-between px-[12px] sm:px-[18px] h-[44px] border-b border-[#16161A] bg-[#08080B] gap-2">
+        <div className="flex items-center gap-[9px] sm:gap-[13px] min-w-0">
           <div className="flex gap-[6px]">
             <span className="h-[8px] w-[8px] rounded-[1px]" style={{ background: accent, boxShadow: `0 0 9px ${accent}` }} />
             <span className="h-[8px] w-[8px] rounded-[1px] bg-[#C084FC]/70 shadow-[0_0_7px_#C084FC]" />
             <span className="h-[8px] w-[8px] rounded-[1px] bg-[#818CF8]/60 shadow-[0_0_7px_#818CF8]" />
           </div>
-          <div className="flex items-baseline gap-[10px]">
-            <span className="text-[12px] tracking-[0.22em] font-[750]" style={{ color: accent }}>
+          <div className="flex items-baseline gap-[6px] sm:gap-[10px] min-w-0">
+            <span className="text-[10px] sm:text-[12px] tracking-[0.14em] sm:tracking-[0.22em] font-[750] truncate" style={{ color: accent }}>
               {title}
             </span>
             {subtitle && (
               <>
                 <span className="text-[#333]">•</span>
-                <span className="text-[10px] tracking-[0.18em] text-[#C084FC] font-[600]">{subtitle}</span>
+                <span className="hidden sm:inline text-[10px] tracking-[0.18em] text-[#C084FC] font-[600] truncate">{subtitle}</span>
               </>
             )}
           </div>
         </div>
-        <div className="text-[10px] tracking-[0.22em] text-[#555] font-bold">zsh</div>
+        <div className="text-[9px] sm:text-[10px] tracking-[0.14em] sm:tracking-[0.22em] text-[#555] font-bold shrink-0">zsh</div>
       </div>
 
       <div className="px-[19px] sm:px-[23px] py-[22px]">{children}</div>
