@@ -790,17 +790,16 @@ function BootSequence({ onComplete }: { onComplete: () => void }) {
   const [lines, setLines] = useState<string[]>([]);
   const [progress, setProgress] = useState(0);
 
+
   useEffect(() => {
     const bootLogs = [
-      "WAKING THE GHOSTS IN THE MACHINE...",
-      "BYPASSING FIREWALL [0x7B9A]... SUCCESS",
-      "INJECTING DedSec_PAYLOAD v3.9.0",
-      "ESTABLISHING SECURE P2P TUNNEL...",
-      "DECRYPTING CORE IDENTITY DATABASES...",
-      "OVERRIDING MAIN_FRAME... [ACCESS GRANTED]",
-      "WELCOME TO THE UNDERGROUND, SRGN_of_DTH"
+      "ENSURING YOU ARE WORTHY ENOUGH TO OPEN OMAR_WAEL PORTFOLIO OR NOT...",
+      "MMM... YOU LOOK HANDSOME ENOUGH TO CONTINUE BUT PLEASE SMILE ^_^",
+      "WATCHING YOUR SEARCH HISTORY TO SEE IF YOU ARE WITH GOOD MANNERS OR NOT X_X...",
+      "WELCOME TO THE PORTFOLIO OF OMAR WAEL , THE BEST DEVELOPER EVER (⌐■_■)...",
+      "I HOPE YOU ENJOY MY PORTFOLIO <3 ",
     ];
-
+    
     let currentLog = 0;
     const logInterval = setInterval(() => {
       if (currentLog < bootLogs.length) {
